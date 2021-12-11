@@ -1,0 +1,25 @@
+{
+  "name": "your-team-generator",
+  "version": "1.0.0",
+  "description": "Generates a webpage with a work teams basic info",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanielArzani/your-team-generator.git"
+  },
+  "author": "Daniel Arzanipour",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanielArzani/your-team-generator/issues"
+  },
+  "homepage": "https://github.com/DanielArzani/your-team-generator#readme",
+  "devDependencies": {
+    "jest": "^27.4.4"
+  }
+}
