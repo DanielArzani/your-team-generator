@@ -19,16 +19,41 @@ const managerInput = function () {
         type: "input",
         name: "name",
         message: "Please enter manager's name",
+        validate: (input) => {
+          if (input) {
+            return true;
+          } else {
+            console.log("Please enter the managers name");
+            return false;
+          }
+        },
       },
       {
         type: "input",
         name: "id",
         message: "Please enter manager's ID",
+        validate: (input) => {
+          if (isNaN(input)) {
+            console.log("Please enter the manager's ID");
+            return false;
+          } else {
+            return true;
+          }
+        },
       },
       {
         type: "input",
         name: "email",
         message: "Please enter manager's Email Address",
+        validate: (email) => {
+          valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+          if (valid) {
+            return true;
+          } else {
+            console.log("Please enter a valid email!");
+            return false;
+          }
+        },
       },
       {
         type: "number",
@@ -42,7 +67,6 @@ const managerInput = function () {
       const manager = new Manager(name, id, email, officeNumber);
 
       team.push(manager);
-      //   console.log(manager);
       console.log(team);
     });
 };
@@ -65,28 +89,59 @@ const chooseRole = function () {
         type: "input",
         name: "name",
         message: "What is their name?",
+        validate: (input) => {
+          if (input) {
+            return true;
+          } else {
+            console.log("Please enter the employee's name");
+            return false;
+          }
+        },
       },
       {
         type: "input",
         name: "id",
-        message: "Please enter their Employee ID",
+        message: "Please enter their employee ID",
       },
       {
         type: "input",
         name: "email",
         message: "Please enter their email address",
+        validate: (email) => {
+          valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+          if (valid) {
+            return true;
+          } else {
+            console.log("Please enter a valid email!");
+            return false;
+          }
+        },
       },
       {
         type: "input",
         name: "github",
         message: "Please enter their Github username",
         when: (input) => input.role === "Engineer",
+        validate: (input) => {
+          if (input) {
+            return true;
+          } else {
+            console.log("Please enter the employee's Github username");
+          }
+        },
       },
       {
         type: "input",
         name: "school",
         message: "Please enter the school they graduated from",
         when: (input) => input.role === "Intern",
+        validate: (input) => {
+          if (input) {
+            return true;
+          } else {
+            console.log("Please enter the intern's school");
+          }
+        },
       },
       {
         type: "confirm",

@@ -1,8 +1,3 @@
-//Notes
-//Might change to full name
-//Id should be 10 char long
-//Email needs to contain @
-
 //* Imports
 const Employee = require("../lib/Employee");
 
