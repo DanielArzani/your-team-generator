@@ -1,0 +1,26 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  min-height: 30vh;
+  margin-top: 1em;
+  background-color: red;
+  text-align: center;
+  padding-top: 5em;
+}
+
+h1 {
+  font-size: 5rem;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  /* align-items: center;
+    flex-direction: column; */
+  flex-wrap: wrap;
+}

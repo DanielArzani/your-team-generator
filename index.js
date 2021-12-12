@@ -4,6 +4,7 @@ const inquirer = require("inquirer");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
+const template = require("./src/template");
 
 //* Team Array
 // Creates empty array which will hold all roles
@@ -118,10 +119,38 @@ const chooseRole = function () {
     });
 };
 
+// Generates HTML file
+const writeFile = (data) => {
+  fs.writeFile("./dist/index.html", data, (err) => {
+    if (err) {
+      console.log(err);
+      return;
+    } else {
+      console.log(
+        "Congratulations! Your team profile has been successfully created."
+      );
+    }
+  });
+};
+
+//^ Basic version just to see if it works
+// managerInput()
+//   .then(chooseRole)
+//   .then((team) => {
+//     console.log(team);
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
+
+//^ This will be the working version once I actually write up my html and css
 managerInput()
   .then(chooseRole)
   .then((team) => {
-    console.log(team);
+    return template(team);
+  })
+  .then((pageHTML) => {
+    return writeFile(pageHTML);
   })
   .catch((err) => {
     console.log(err);
