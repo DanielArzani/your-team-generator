@@ -1,19 +1,17 @@
 //* Imports
 const fs = require("fs");
 const inquirer = require("inquirer");
-const Employee = require("./lib/Employee");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
-const { off } = require("process");
 
 //* Team Array
 // Creates empty array which will hold all roles
 const team = [];
 
-//* Input Questions
+//* Inquiries
 
-const questions = function () {
+const managerInput = function () {
   return inquirer
     .prompt([
       {
@@ -48,31 +46,6 @@ const questions = function () {
     });
 };
 
-const engineerObj = function () {
-  return inquirer.prompt([
-    {
-      type: "input",
-      name: "engineerName",
-      message: "Please enter engineer's name",
-    },
-    {
-      type: "input",
-      name: "engineerId",
-      message: "Please enter engineer's ID",
-    },
-    {
-      type: "input",
-      name: "engineerEmail",
-      message: "Please enter engineer's Email Address",
-    },
-    {
-      type: "input",
-      name: "githubUsername",
-      message: "Please enter your Github username",
-    },
-  ]);
-};
-
 const chooseRole = function () {
   console.log(`
     =================
@@ -80,21 +53,76 @@ const chooseRole = function () {
     =================
     `);
   return inquirer
-    .prompt({
-      type: "list",
-      name: "role",
-      message: "Would you like to add another team member or are you finished?",
-      choices: ["Engineer", "Intern", "Finished"],
-    })
-    .then(({ role }) => {
+    .prompt([
+      {
+        type: "list",
+        name: "role",
+        message: "Please choose what kind of employee you wish to add",
+        choices: ["Engineer", "Intern"],
+      },
+      {
+        type: "input",
+        name: "name",
+        message: "What is their name?",
+      },
+      {
+        type: "input",
+        name: "id",
+        message: "Please enter their Employee ID",
+      },
+      {
+        type: "input",
+        name: "email",
+        message: "Please enter their email address",
+      },
+      {
+        type: "input",
+        name: "github",
+        message: "Please enter their Github username",
+        when: (input) => input.role === "Engineer",
+      },
+      {
+        type: "input",
+        name: "school",
+        message: "Please enter the school they graduated from",
+        when: (input) => input.role === "Intern",
+      },
+      {
+        type: "confirm",
+        name: "addEmployee",
+        message: "Would you like to add another team member?",
+        default: false,
+      },
+    ])
+    .then((employeeData) => {
+      let { role, name, id, email, github, school, addEmployee } = employeeData;
+      // Will decide if employee is engineer or intern
+      let employee;
+
       if (role === "Engineer") {
-        return engineerObj();
+        employee = new Engineer(name, id, email, github);
       } else if (role === "Intern") {
-        // Call intern object
+        employee = new Intern(name, id, email, school);
+      }
+
+      // Adds new employee to team array
+      team.push(employee);
+      console.log(employee);
+
+      // Asks if user wishes to create another role
+      if (addEmployee) {
+        return chooseRole(team);
       } else {
-        return;
+        return team;
       }
     });
 };
 
-questions();
+managerInput()
+  .then(chooseRole)
+  .then((team) => {
+    console.log(team);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
