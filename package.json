@@ -21,5 +21,8 @@
   "homepage": "https://github.com/DanielArzani/your-team-generator#readme",
   "devDependencies": {
     "jest": "^27.4.4"
+  },
+  "dependencies": {
+    "inquirer": "^8.2.0"
   }
 }
