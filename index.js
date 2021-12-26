@@ -8,45 +8,63 @@ const Intern = require("./lib/intern.js");
 const teamData = [];
 
 // Manager Input
-const managerQuestions = [
-  {
-    type: "input",
-    name: "name",
-    message: "What is the team managers name?",
-    validate: (input) => {
-      if (input) {
-        return true;
-      } else {
-        console.log("Please enter the managers name");
-        return false;
-      }
-    },
-  },
-  {
-    type: "number",
-    name: "id",
-    message: "What is their employee ID?",
-  },
-  {
-    type: "input",
-    name: "email",
-    message: "What is their email address?",
-    validate: (email) => {
-      valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
-      if (valid) {
-        return true;
-      } else {
-        console.log("Please enter a valid email!");
-        return false;
-      }
-    },
-  },
-  {
-    type: "number",
-    name: "officeNumber",
-    message: "What is their Office Number?",
-  },
-];
+function managerInput() {
+  return inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "name",
+        message: "What is the team managers name?",
+        validate: (input) => {
+          if (input) {
+            return true;
+          } else {
+            console.log("Please enter the managers name");
+            return false;
+          }
+        },
+      },
+      {
+        type: "number",
+        name: "id",
+        message: "What is their employee ID?",
+        validate: (input) => {
+          if (isNaN(input)) {
+            console.log("Please enter the manager's ID");
+            return false;
+          } else {
+            return true;
+          }
+        },
+      },
+      {
+        type: "input",
+        name: "email",
+        message: "What is their email address?",
+        validate: (email) => {
+          valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+          if (valid) {
+            return true;
+          } else {
+            console.log("Please enter a valid email!");
+            return false;
+          }
+        },
+      },
+      {
+        type: "input",
+        name: "officeNumber",
+        message: "What is their Office Number?",
+      },
+    ])
+    .then((managerData) => {
+      let manager;
+      let { name, id, email, officeNumber } = managerData;
+
+      manager = new Manager(name, id, email, officeNumber);
+      teamData.push(manager);
+    });
+}
 
 function chooseRole() {
   return inquirer
@@ -74,6 +92,14 @@ function chooseRole() {
         type: "number",
         name: "id",
         message: "What is their employee ID?",
+        validate: (input) => {
+          if (isNaN(input)) {
+            console.log("Please enter the manager's ID");
+            return false;
+          } else {
+            return true;
+          }
+        },
       },
       {
         type: "input",
@@ -119,6 +145,7 @@ function chooseRole() {
         type: "confirm",
         name: "confirmMember",
         message: "Do you want to add another team member?",
+        default: false,
       },
     ])
     .then((data) => {
@@ -127,7 +154,8 @@ function chooseRole() {
 
       if (role === "Engineer") {
         employee = new Engineer(name, id, email, github);
-      } else if (role === "Intern") {
+      }
+      if (role === "Intern") {
         employee = new Intern(name, id, email, school);
       }
 
@@ -146,21 +174,13 @@ function chooseRole() {
 
 async function getInput() {
   // Get manager inputs and push data to team array
-  const managerData = await inquirer.prompt(managerQuestions);
-
-  const manager = new Manager(
-    managerData.name,
-    managerData.id,
-    managerData.email,
-    managerData.officeNumber
-  );
-  teamData.push(manager);
-  console.log(teamData);
+  const managerData = await managerInput();
 
   // Calls function that gets team members data
   const teamInfo = await chooseRole();
-  console.log(teamInfo);
 
+  // Copy File
+  // fs.copyFile("./src/images", "./dist/images");
   // Create File
   fs.writeFile("./dist/index.html", template(teamInfo), (err) => {
     if (err) throw err;

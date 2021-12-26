@@ -25,8 +25,8 @@ function manager(manager) {
     <!-- Bottom half -->
     <div class="info">
     <p>${manager.name}</p>
-    <p>EMAIL:Email: <a href="mailto:${manager.email}">${manager.email}</a></p>
-    <p>ID: ${manager.id}></p>
+    <p>Email: <a href="mailto:${manager.email}">${manager.email}</a></p>
+    <p>ID: ${manager.id}</p>
     <p>Office Number: ${manager.officeNumber}</p>
     </div>
   </div>`;
@@ -60,14 +60,14 @@ function engineer(engineer) {
     <!-- Bottom half -->
     <div class="info">
     <p>${engineer.name}</p>
-    <p>EMAIL:Email: <a href="mailto:${engineer.email}">${engineer.email}</a></p>
-    <p>ID: ${engineer.id}></p>
+    <p>Email: <a href="mailto:${engineer.email}">${engineer.email}</a></p>
+    <p>ID: ${engineer.id}</p>
     <p>Github: <a target="_blank" href="https://github.com/${engineer.github}">${engineer.github}</a></p>
     </div>
   </div>`;
 }
 
-function intern() {
+function intern(intern) {
   return `<!-- Intern Card -->
   <div class="card intern-card">
     <!-- Top half - Image -->
@@ -95,8 +95,8 @@ function intern() {
     <!-- Bottom half -->
     <div class="info">
     <p>${intern.name}</p>
-    <p>EMAIL:Email: <a href="mailto:${intern.email}">${intern.email}</a></p>
-    <p>ID: ${intern.id}></p>
+    <p>Email: <a href="mailto:${intern.email}">${intern.email}</a></p>
+    <p>ID: ${intern.id}</p>
     <p>School: ${intern.school}</p>
     </div>
   </div>`;
@@ -159,6 +159,7 @@ function htmlPage(team) {
         }
         a:link,a:visited{
           color: #0000EE;
+          text-decoration: none;
         }
         a:active,
         a:hover {
