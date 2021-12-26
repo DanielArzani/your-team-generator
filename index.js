@@ -179,8 +179,6 @@ async function getInput() {
   // Calls function that gets team members data
   const teamInfo = await chooseRole();
 
-  // Copy File
-  // fs.copyFile("./src/images", "./dist/images");
   // Create File
   fs.writeFile("./dist/index.html", template(teamInfo), (err) => {
     if (err) throw err;
