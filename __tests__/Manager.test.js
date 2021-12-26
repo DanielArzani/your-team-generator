@@ -1,13 +1,14 @@
-const Manager = require("../lib/Manager");
+const Manager = require("../lib/manager.js");
 
-test("manager has a office number that is a number", () => {
-  const manager = new Manager("Dan", "123", "dan@gmail", 5);
-
-  expect(manager.officeNumber).toEqual(expect.any(Number));
-});
-
-test("getRole method returns string Manager", () => {
+describe("Manager", () => {
   const manager = new Manager();
-
-  expect(manager.getRole()).toBe("Manager");
+  beforeEach(() => {
+    manager.officeNumber = 3124;
+  });
+  it("officeNumber property is any number", () => {
+    expect(manager.officeNumber).toEqual(expect.any(Number));
+  });
+  it("getRole returns Manager", () => {
+    expect(manager.getRole()).toEqual("Manager");
+  });
 });

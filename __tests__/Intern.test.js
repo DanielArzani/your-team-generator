@@ -1,18 +1,17 @@
-const Intern = require("../lib/Intern.js");
+const Intern = require("../lib/intern.js");
 
-test("intern has school property that is a string", () => {
-  const intern = new Intern("Dan", "123", "dan@gmail", "Durham College");
-  expect(intern.school).toEqual(expect.any(String));
-});
-
-test("gets interns school", () => {
-  const intern = new Intern("Dan", "123", "dan@gmail");
-
-  expect(intern.getSchool("school")).toEqual(expect.any(String));
-});
-
-test("getRole method returns string Engineer", () => {
+describe("Intern", () => {
   const intern = new Intern();
-
-  expect(intern.getRole()).toBe("Intern");
+  beforeEach(() => {
+    intern.school = "University of Toronto";
+  });
+  it("has school property equal to any string", () => {
+    expect(intern.school).toEqual(expect.any(String));
+  });
+  it("getSchool returns school", () => {
+    expect(intern.getSchool()).toEqual("University of Toronto");
+  });
+  it("getRole returns Intern", () => {
+    expect(intern.getRole()).toEqual("Intern");
+  });
 });

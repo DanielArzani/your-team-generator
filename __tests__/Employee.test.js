@@ -1,42 +1,27 @@
-//* Imports
-const Employee = require("../lib/Employee");
+const Employee = require("../lib/employee.js");
 
-//* Tests
-
-test("employee has a name,id and email", () => {
-  const employee = new Employee("Dan", 2345674542, "dan@gmail");
-
-  expect(employee.name).toEqual(expect.any(String));
-  expect(employee.id).toHaveLength(10);
-  expect(employee.email).toContain("@");
-});
-
-test("will get the employees name", () => {
-  const employee = new Employee("Dan");
-
-  expect(employee.getName(employee.name)).toEqual(
-    expect.stringContaining(employee.name)
-  );
-});
-
-test("will get the employees id number", () => {
-  const employee = new Employee("Dan", "1");
-
-  expect(employee.getId(employee.id)).toEqual(
-    expect.stringContaining(employee.id)
-  );
-});
-
-test("gets employees email", () => {
-  const employee = new Employee("Dan", "daniel@gmail");
-
-  expect(employee.getEmail(employee.email)).toEqual(
-    expect.stringContaining(employee.email)
-  );
-});
-
-test("gets role", () => {
+describe("Employee", () => {
   const employee = new Employee();
-
-  expect(employee.getRole()).toBe("Employee");
+  beforeEach(() => {
+    employee.name = "Daniel";
+    employee.id = 1234;
+    employee.email = "daniel@gmail";
+  });
+  it("returns name, id and email properties", () => {
+    expect(employee.name).toEqual(expect.any(String));
+    expect(employee.id).toEqual(expect.any(Number));
+    expect(employee.email).toEqual(expect.stringContaining("@"));
+  });
+  it("getName returns name", () => {
+    expect(employee.getName()).toEqual("Daniel");
+  });
+  it("getId returns id", () => {
+    expect(employee.getId()).toEqual(1234);
+  });
+  it("getEmail returns email", () => {
+    expect(employee.getEmail()).toEqual("daniel@gmail");
+  });
+  it("getRole returns Employee", () => {
+    expect(employee.getRole()).toEqual("Employee");
+  });
 });
